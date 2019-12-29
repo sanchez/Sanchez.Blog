@@ -17,4 +17,9 @@
       <PackageReference Include="LibSassHost.Native.win-x64" Version="1.2.10" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Sanchez.Blog.Core\Sanchez.Blog.Core.fsproj" />
+      <ProjectReference Include="..\Sanchez.Blog.Services\Sanchez.Blog.Services.fsproj" />
+    </ItemGroup>
+
 </Project>
