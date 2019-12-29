@@ -7,6 +7,14 @@
     <ItemGroup>
       <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap\bootstrap.min.css" />
       <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap\bootstrap.min.css.map" />
+      <_ContentIncludedByDefault Remove="wwwroot\css\MainLayout.css" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="LibSassHost" Version="1.2.10" />
+      <PackageReference Include="LibSassHost.Native.linux-x64" Version="1.2.10" />
+      <PackageReference Include="LibSassHost.Native.osx-x64" Version="1.2.10" />
+      <PackageReference Include="LibSassHost.Native.win-x64" Version="1.2.10" />
     </ItemGroup>
 
 </Project>
