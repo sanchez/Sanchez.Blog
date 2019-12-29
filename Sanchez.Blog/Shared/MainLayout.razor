@@ -1,0 +1,27 @@
+﻿@inherits LayoutComponentBase
+
+<link href="css/MainLayout.css" rel="stylesheet" />
+
+<div class="header-content">
+    <header>
+        <h1>Sanchez.Blog</h1>
+    </header>
+
+    <nav>
+        <div>
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                Home
+            </NavLink>
+            <NavLink class="nav-link" href="about">
+                About
+            </NavLink>
+        </div>
+    </nav>
+</div>
+
+<div class="content">
+    @Body
+</div>
+
+<footer>
+</footer>
