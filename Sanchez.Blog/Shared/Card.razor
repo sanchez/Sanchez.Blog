@@ -1,0 +1,27 @@
+<div class="card">
+    @if (Title != null)
+    {
+        <div class="title">@Title</div>
+    }
+
+    @if (SubTitle != null)
+    {
+        <div class="subtitle">@SubTitle</div>
+    }
+
+    @if (ChildContent != null)
+    {
+        <div class="content">@ChildContent</div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string Title { get; set; }
+
+    [Parameter]
+    public string SubTitle { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}

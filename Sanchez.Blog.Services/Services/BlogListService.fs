@@ -2,16 +2,29 @@ namespace Sanchez.Blog.Services.Services
 
 open System.IO
 open Sanchez.Blog.Core.IServices
+open Sanchez.Markdown.Parser
+open Sanchez.Blog.Core.Models
 
 type BlogListService () =
     
+    let loadBlogData (path: string) =
+        async {
+            let! data = File.ReadAllTextAsync path |> Async.AwaitTask
+            return MarkdownParser.ParseMetadata data
+        }
+    
     let rec loadBlogsFromDirectory (path: string) (prefix: string) =
         async {
-            let files =
+            let! files =
                 Directory.GetFiles(path, "*.md")
-                |> Array.map Path.GetFileName
-                |> Array.map (fun x -> prefix + "/" + x)
-                |> Array.toList
+                |> Array.map (fun x ->
+                    async {
+                        let! metadata = loadBlogData x
+                        let fileName = prefix + "/" + Path.GetFileName (x)
+                        return Blog (metadata, fileName)
+                    })
+                |> Async.Parallel
+            
             let folders = Directory.GetDirectories(path)
             
             let! childrenFiles =
@@ -20,7 +33,8 @@ type BlogListService () =
                 |> Async.Parallel
                 
             return
-                [files]
+                [files
+                 |> Array.toList]
                 |> List.append (childrenFiles |> Array.toList)
                 |> List.reduce List.append
         }
@@ -29,6 +43,11 @@ type BlogListService () =
         member this.GetFeaturedBlogs () =
             async {
                 let fullBlogPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "blogs")
-                return! loadBlogsFromDirectory fullBlogPath "blogs"
+                return! loadBlogsFromDirectory fullBlogPath "blog"
             }
             |> Async.StartAsTask
+            
+        member this.ResolveBlogPath blogName =
+            let completeName = blogName + ".md"
+            let fullBlogPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "blogs")
+            Path.Combine(fullBlogPath, completeName)

@@ -5,12 +5,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="Library.fs" />
         <Compile Include="Services\BlogListService.fs" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Sanchez.Blog.Core\Sanchez.Blog.Core.fsproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Sanchez.Markdown.Parser" Version="0.1.5" />
     </ItemGroup>
 
 </Project>

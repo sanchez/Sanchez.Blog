@@ -1,0 +1,44 @@
+@page "/blog/{folder}/{file}"
+@using Sanchez.Blog.Core.IServices
+@using Sanchez.Markdown.Parser
+@using Sanchez.Markdown.Renderers
+@layout MainLayout
+@inject NavigationManager NavigationManager
+@inject IBlogListService BlogListService
+@inject IRenderer<RenderFragment> Renderer
+
+<Card Title="@Title" SubTitle="@SubTitle">
+    @Content
+</Card>
+
+@code {
+    
+    [Parameter]
+    public string Folder { get; set; }
+
+    [Parameter]
+    public string File { get; set; }
+
+    RenderFragment Content { get; set; }
+    string Title { get; set; }
+    string Author { get; set; }
+    string Date { get; set; }
+    string SubTitle => $"{Author}; {Date}";
+
+    protected override async Task OnInitializedAsync()
+    {
+        var currentUri = new Uri(NavigationManager.Uri);
+        var blogRoot = new Uri(new Uri(NavigationManager.BaseUri), "blog/");
+        var fullPath = BlogListService.ResolveBlogPath(blogRoot.MakeRelativeUri(currentUri).ToString());
+
+        var content = await System.IO.File.ReadAllTextAsync(fullPath);
+
+        var document = MarkdownParser.ParseString(content);
+
+        Title = document.Title;
+        Author = document.Author;
+        Date = document.Date;
+        Content = Renderer.Render(document);
+    }
+
+}

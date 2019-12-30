@@ -1,10 +1,13 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Sanchez.Blog.Core.IServices;
 using Sanchez.Blog.Services.Services;
+using Sanchez.Markdown.Renderers;
+using Sanchez.Markdown.Renderers.Blazor;
 
 namespace Sanchez.Blog
 {
@@ -22,6 +25,7 @@ namespace Sanchez.Blog
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IBlogListService, BlogListService>();
+            services.AddSingleton<IRenderer<RenderFragment>, BlazorRenderer>();
 
             services.AddRazorPages();
             services.AddServerSideBlazor();

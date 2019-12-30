@@ -1,26 +1,39 @@
 .card {
-  padding: 20px;
-  padding-left: 60px;
   width: 100%;
   flex: 1;
 
-  background-color: lighten($background, 30%);
+  background-color: $white;
   border-radius: 5px;
   border: 2px solid $black;
 
 
   > .title {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     font-weight: bold;
-    margin-bottom: 10px;
+    padding: 20px;
+    padding-left: 60px;
+    padding-bottom: 10px;
+    background-color: darken($white, 20%);
   }
 
   > .subtitle {
     font-size: 0.9rem;
     font-style: italic;
+    padding: 20px;
+    padding-left: 60px;
+    background-color: darken($white, 20%);
+  }
+
+  > .title ~ .subtitle {
+    padding: 0 20px 20px 60px;
   }
 
   > .title ~ .content {
     padding-top: 24px;
+  }
+
+  > .content {
+    padding: 20px;
+    padding-left: 60px;
   }
 }

@@ -1,3 +1,9 @@
+---
+title: The Beginning
+author: Daniel Fitz
+date: 30th December 2019
+---
+
 # Welcome
 I would like to start by just welcoming you to my playground which I hope to be further developing and expanding in the foreseeable (I hope that is spelt right) future! Thank you very much for taking your time to stumble across this and for looking through and giving feedback within this site.
 
