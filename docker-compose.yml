@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  sanchez.blog:
+    image: ${DOCKER_REGISTRY-}sanchezblog
+    build:
+      context: .
+      dockerfile: Sanchez.Blog/Dockerfile
