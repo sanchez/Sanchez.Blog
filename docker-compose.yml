@@ -6,3 +6,7 @@ services:
     build:
       context: .
       dockerfile: Sanchez.Blog/Dockerfile
+    ports:
+      - "1024:80"
+      - "2024:443"
+    restart: always
