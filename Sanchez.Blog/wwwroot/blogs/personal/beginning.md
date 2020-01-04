@@ -2,6 +2,7 @@
 title: The Beginning
 author: Daniel Fitz
 date: 30th December 2019
+featured: true
 ---
 
 # Welcome
