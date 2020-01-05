@@ -43,7 +43,29 @@ type BlogListService () =
         member this.GetFeaturedBlogs () =
             async {
                 let fullBlogPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "blogs")
-                return! loadBlogsFromDirectory fullBlogPath "blog"
+                let! blogs = loadBlogsFromDirectory fullBlogPath "blog"
+                
+                return query {
+                    for blog in blogs do
+                        where blog.IsFeatured
+                        sortByDescending blog.Date
+                        take 10
+                }
+                |> Seq.toList
+            }
+            |> Async.StartAsTask
+            
+        member this.GetRecentBlogs () =
+            async {
+                let fullBlogPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "blogs")
+                let! blogs = loadBlogsFromDirectory fullBlogPath "blog"
+                
+                return query {
+                    for blog in blogs do
+                        sortByDescending blog.Date
+                        take 10
+                }
+                |> Seq.toList
             }
             |> Async.StartAsTask
             

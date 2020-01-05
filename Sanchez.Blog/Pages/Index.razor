@@ -6,6 +6,11 @@
     <h1>Hello World!</h1>
     This is my blogging area where I hope to be writing about cool and fun little things I have done. Expect to see a lot of dotnet core projects and ideas I have bubbling around! Feel free to check out my <a href="https://github.com/sanchez/">GitHub</a> for more information on my projects and source of the snippets mentioned here.
 
+    <h3>Recent Blog Posts:</h3>
+    <div>
+        @RecentBlogs
+    </div>
+
     <h3>Featured Blog Posts:</h3>
     <div>
         @FeaturedBlogs
@@ -15,10 +20,12 @@
 @code {
 
     public RenderFragment FeaturedBlogs { get; set; }
+    public RenderFragment RecentBlogs { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         var blogs = await BlogListService.GetFeaturedBlogs();
+        
         FeaturedBlogs = new RenderFragment(builder =>
         {
             builder.OpenElement(0, "ul");
@@ -36,6 +43,24 @@
             }
             builder.CloseElement();
         });
+
+        RecentBlogs = builder =>
+        {
+            builder.OpenElement(0, "ul");
+            int i = 1;
+            foreach (var blog in blogs)
+            {
+                builder.OpenElement(i++, "li");
+
+                builder.OpenElement(i++, "a");
+                builder.AddAttribute(i++, "href", blog.Path);
+                builder.AddContent(i++, blog.Title);
+                builder.CloseElement();
+
+                builder.CloseElement();
+            }
+            builder.CloseElement();
+        };
     }
  
 }
