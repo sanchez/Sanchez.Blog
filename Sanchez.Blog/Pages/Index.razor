@@ -24,13 +24,14 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var blogs = await BlogListService.GetFeaturedBlogs();
+        var featuredBlogs = await BlogListService.GetFeaturedBlogs();
+        var recentBlogs = await BlogListService.GetRecentBlogs();
         
         FeaturedBlogs = new RenderFragment(builder =>
         {
             builder.OpenElement(0, "ul");
             int i = 1;
-            foreach (var blog in blogs)
+            foreach (var blog in featuredBlogs)
             {
                 builder.OpenElement(i++, "li");
                 
@@ -48,7 +49,7 @@
         {
             builder.OpenElement(0, "ul");
             int i = 1;
-            foreach (var blog in blogs)
+            foreach (var blog in recentBlogs)
             {
                 builder.OpenElement(i++, "li");
 
